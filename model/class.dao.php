@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultÃ³rio mÃ©dico/odontolÃ³gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -17,8 +17,10 @@
 
             $conexao = 'mysql:host='.HOST.';dbname='.DB;
 
-            try{
+            try {
                 $conn = new PDO($conexao, USER, PASS);
+                
+                $conn->exec("set names utf8");
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 return $conn;

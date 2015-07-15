@@ -3,8 +3,7 @@
 /*       Desenvolvido por: Reinaldo Silveira         */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-DROP DATABASE IF EXISTS db_consultorio;
-CREATE DATABASE db_consultorio DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS db_consultorio CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE db_consultorio;
 
 

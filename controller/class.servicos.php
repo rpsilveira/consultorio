@@ -6,7 +6,10 @@
 	
     class Servicos extends ServicosModel{
     
-        public function __construct() { }        
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function inserir() {
 
@@ -31,10 +34,12 @@
           
             $consulta = $this->buscaServicosCodigo();
             
-            $this->setServicoId($consulta["servico_id"]);
-            $this->setNome($consulta["nome"]);
-            $this->setTipoTratamentoId($consulta["tipotratamento_id"]);	
-            $this->setValor($consulta["valor"]);	
+            $this->setServicoId($consulta["SERVICO_ID"]);
+            $this->setNome($consulta["NOME"]);
+            $this->setTipoTratamentoId($consulta["TIPOTRATAMENTO_ID"]);	
+            $this->setValor($consulta["VALOR"]);
+            
+            return ($ret_consulta['SERVICO_ID'] == $codigo);
         }
         
         public function excluir($servico_id){

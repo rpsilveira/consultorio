@@ -6,7 +6,10 @@
 
     class Materiais extends MaterialModel {
     
-        public function __construct() { }
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function listarTodos() {
         
@@ -22,10 +25,12 @@
             
             $dados_material = $this->buscarMaterial();
             
-            $this->setNome($dados_material["nome"]);
-            $this->setSaldoMin($dados_material["saldo_min"]);
-            $this->setSaldoAtual($dados_material["saldo_atual"]);
-            $this->setValor($dados_material["valor"]);
+            $this->setNome($dados_material["NOME"]);
+            $this->setSaldoMin($dados_material["SALDO_MIN"]);
+            $this->setSaldoAtual($dados_material["SALDO_ATUAL"]);
+            $this->setValor($dados_material["VALOR"]);
+            
+            return ($ret_consulta['MATERIAL_ID'] == $codigo);
         }
         
         public function incluir(){

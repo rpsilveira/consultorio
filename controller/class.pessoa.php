@@ -6,15 +6,17 @@
 
     class Pessoa extends PessoaModel {
     
-        public function __construct() { }
-        
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function validaNome($nome) {
         
             return $this->validaNomePessoa($nome);
         }
         
-        public function loginUsuario() {
+        public function login() {
           
             $this->setLogin($_POST["login"]);
             $this->setSenha(md5($_POST["senha"]));
@@ -41,11 +43,12 @@
             return $retorno;
         }
         
-        public function validaSenha($codigo, $senha){
+        public function validaSenha(){
         
-            $senha = md5($senha);
+            $this->setPessoaId($_SESSION["usr_id"]);
+            $this->setSenha(md5($_POST["senha_atual"]));
             
-            return $this->validaSenha($codigo, $senha);
+            return $this->validaSenhaAtual();
         }
         
         public function listarTodos($nivel){
@@ -82,21 +85,23 @@
             
             $dados_pessoa = $this->buscaPessoa();
             
-            $this->setNome($dados_pessoa["nome"]);
-            $this->setEndereco($dados_pessoa["endereco"]);
-            $this->setBairro($dados_pessoa["bairro"]);
-            $this->setCep($dados_pessoa["cep"]);
-            $this->setCidadeId($dados_pessoa["cidade_id"]);
-            $this->setTelefone($dados_pessoa["telefone"]);
-            $this->setCelular($dados_pessoa["celular"]);
-            $this->setEmail($dados_pessoa["email"]);
-            $this->setNivel($dados_pessoa["nivel"]);
-            $this->setAtivo($dados_pessoa["ativo"]);
-            $this->setCpf($dados_pessoa["cpf"]);	
-            $this->setDataNascimento($dados_pessoa["dt_nascimento"]);
-            $this->setSexo($dados_pessoa["sexo"]);
-            $this->setLogin($dados_pessoa["login"]);
-            $this->setSenha($dados_pessoa["senha"]);
+            $this->setNome($dados_pessoa["NOME"]);
+            $this->setEndereco($dados_pessoa["ENDERECO"]);
+            $this->setBairro($dados_pessoa["BAIRRO"]);
+            $this->setCep($dados_pessoa["CEP"]);
+            $this->setCidadeId($dados_pessoa["CIDADE_ID"]);
+            $this->setTelefone($dados_pessoa["TELEFONE"]);
+            $this->setCelular($dados_pessoa["CELULAR"]);
+            $this->setEmail($dados_pessoa["EMAIL"]);
+            $this->setNivel($dados_pessoa["NIVEL"]);
+            $this->setAtivo($dados_pessoa["ATIVO"]);
+            $this->setCpf($dados_pessoa["CPF"]);	
+            $this->setDataNascimento($dados_pessoa["DT_NASCIMENTO"]);
+            $this->setSexo($dados_pessoa["SEXO"]);
+            $this->setLogin($dados_pessoa["LOGIN"]);
+            $this->setSenha($dados_pessoa["SENHA"]);
+            
+            return ($ret_consulta['pessoa_id'] == $codigo);
         }
         
         public function incluir() {
@@ -120,10 +125,10 @@
             return $resultado;
         }
         
-        public function alteraSenha($codigo) {
+        public function alteraSenha() {
         
-            $this->setPessoaId($codigo);
-            $this->setSenha(md5($_POST["nova_senha"]));	
+            $this->setPessoaId($_SESSION["usr_id"]);
+            $this->setSenha(md5($_POST["nova_senha"]));
             
             return $this->alterarSenha();
         }

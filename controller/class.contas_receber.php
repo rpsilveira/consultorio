@@ -6,7 +6,10 @@
 
     class ContasReceber extends ContasReceberModel {
     
-        public function __construct() { }
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function listarTodos() {
         
@@ -32,14 +35,16 @@
             
             $dados_conta = $this->buscarConta();
             
-            $this->setPacienteId($dados_conta["paciente_id"]);
-            $this->setDtEmissao($dados_conta["dt_emissao"]);
-            $this->setDtVencimento($dados_conta["dt_vencimento"]);
-            $this->setDtBaixa($dados_conta["dt_baixa"]);
-            $this->setValor($dados_conta["valor"]);
-            $this->setJuros($dados_conta["juros"]);
-            $this->setDesconto($dados_conta["desconto"]);
-            $this->setValorPago($dados_conta["valor_pago"]);
+            $this->setPacienteId($dados_conta["PACIENTE_ID"]);
+            $this->setDtEmissao($dados_conta["DT_EMISSAO"]);
+            $this->setDtVencimento($dados_conta["DT_VENCIMENTO"]);
+            $this->setDtBaixa($dados_conta["DT_BAIXA"]);
+            $this->setValor($dados_conta["VALOR"]);
+            $this->setJuros($dados_conta["JUROS"]);
+            $this->setDesconto($dados_conta["DESCONTO"]);
+            $this->setValorPago($dados_conta["VALOR_PAGO"]);
+            
+            return ($ret_consulta['CONTA_ID'] == $codigo);
         }
         
         public function incluir() {

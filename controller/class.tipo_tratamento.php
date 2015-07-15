@@ -6,8 +6,10 @@
 	
     class TipoTratamento extends TipoTratamentoModel{
 
-        public function __construct() { }
-        
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
 
         public function listarTodos() {
         
@@ -23,7 +25,9 @@
             
             $dados_tipo_tratamento = $this->buscarTipoTratamento();
             
-            $this->setDescricao($dados_tipo_tratamento["descricao"]);	
+            $this->setDescricao($dados_tipo_tratamento["DESCRICAO"]);	
+            
+            return ($ret_consulta['TIPOTRATAMENTO_ID'] == $codigo);
         }
         
         public function incluir(){

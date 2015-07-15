@@ -15,7 +15,7 @@
 
             $pessoa = new Pessoa();
 
-            if ($pessoa->loginUsuario())
+            if ($pessoa->login())            
                 header("Location: main.php");
             else
                 header("Location: login_erro.php?log=". $login);

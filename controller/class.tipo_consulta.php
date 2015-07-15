@@ -6,7 +6,10 @@
 
     class TipoConsulta extends TipoConsultaModel{
   
-        public function __construct() { }        
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
 
         public function listarTodos() {
         
@@ -22,9 +25,11 @@
             
             $dados_tipo_consulta = $this->buscarTipoConsulta();
             
-            $this->setTipoConsultaId($dados_tipo_consulta["tipoconsulta_id"]);	
-            $this->setDescricao($dados_tipo_consulta["descricao"]);	
-            $this->setValor($dados_tipo_consulta["valor"]);
+            $this->setTipoConsultaId($dados_tipo_consulta["TIPOCONSULTA_ID"]);	
+            $this->setDescricao($dados_tipo_consulta["DESCRICAO"]);	
+            $this->setValor($dados_tipo_consulta["VALOR"]);
+            
+            return ($ret_consulta['TIPOCONSULTA_ID'] == $codigo);
         }
         
         public function incluir() {

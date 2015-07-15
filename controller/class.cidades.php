@@ -6,7 +6,10 @@
 	
     class Cidades extends CidadesModel {
         
-        public function __construct() {}
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
       
         public function listar($estado = "") {
           
@@ -19,8 +22,8 @@
           
             $consulta = $this->buscarCidade($id_cidade);
             
-            $this->setNome($consulta["nome"]);
-            $this->setSiglaUf($consulta["sigla_uf"]);
+            $this->setNome($consulta["NOME"]);
+            $this->setSiglaUf($consulta["SIGLA_UF"]);
         }
       
     }

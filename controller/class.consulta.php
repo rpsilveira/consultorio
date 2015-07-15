@@ -6,7 +6,10 @@
 
     class Consulta extends ConsultaModel {
       
-        public function __construct() { }
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
 
         public function listarTodos() {
         
@@ -27,13 +30,15 @@
             
             $dados_consulta = $this->buscarConsulta();
             
-            $this->setData($dados_consulta["data"]);
-            $this->setDentistaId($dados_consulta["dentista_id"]);
-            $this->setPacienteId($dados_consulta["paciente_id"]);
-            $this->setSalaId($dados_consulta["sala_id"]);
-            $this->setTipoConsultaId($dados_consulta["tipoconsulta_id"]);
-            $this->setHorario($dados_consulta["horario"]);
-            $this->setObservacao($dados_consulta["observacao"]);
+            $this->setData($dados_consulta["DATA"]);
+            $this->setDentistaId($dados_consulta["DENTISTA_ID"]);
+            $this->setPacienteId($dados_consulta["PACIENTE_ID"]);
+            $this->setSalaId($dados_consulta["SALA_ID"]);
+            $this->setTipoConsultaId($dados_consulta["TIPOCONSULTA_ID"]);
+            $this->setHorario($dados_consulta["HORARIO"]);
+            $this->setObservacao($dados_consulta["OBSERVACAO"]);
+            
+            return ($ret_consulta['CONSULTA_ID'] == $codigo);
         }
         
         public function buscarMateriais($codigo) {

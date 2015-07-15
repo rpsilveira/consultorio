@@ -118,16 +118,16 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-pencil"></span> Cadastros<b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Agenda</a></li>
-              <li><a href="#">Consulta</a></li>
-              <li><a href="#">Contas a Receber</a></li>              
-              <li><a href="#">Materiais</a></li>
-              <li><a href="#">Mov. Estoque</a></li>
-              <li><a href="#">Pessoas</a></li>
-              <li><a href="#">Salas</a></li>
-              <li><a href="#">Serviços</a></li>
-              <li><a href="#">Tipo Consulta</a></li>
-              <li><a href="#">Tipo Atendimento</a></li>
+              <li><a href="/view/agenda/busca.php">Agenda</a></li>
+              <li><a href="/view/consultas/busca.php">Consulta</a></li>
+              <li><a href="/view/contas_receber/busca.php">Contas a Receber</a></li>
+              <li><a href="/view/materiais/busca.php">Materiais</a></li>
+              <li><a href="/view/mov_estoque/busca.php">Mov. Estoque</a></li>
+              <li><a href="/view/pessoas/busca.php">Pessoas</a></li>
+              <li><a href="/view/salas/busca.php">Salas</a></li>
+              <li><a href="/view/servicos/busca.php">Serviços</a></li>
+              <li><a href="/view/tipos_atendimento/busca.php">Tipo Atendimento</a></li>
+              <li><a href="/view/tipos_consulta/busca.php">Tipo Consulta</a></li>
             </ul>
           </li>
         </ul>
@@ -207,22 +207,22 @@
       </div>
     </div>
   </div>
-  <!-- /altera senha -->    
+  <!-- /altera senha -->
 
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
           <li><div class="span text-center"><h2>Menu</h2></div></li>
-          <li <?php if($dir=='agendas'){ ?> class="active" <?php } ?> ><a href="#">Agenda</a></li>
-          <li <?php if($dir=='consultas'){ ?> class="active" <?php } ?> ><a href="#">Consultas</a></li>
-          <li <?php if($dir=='contas_receber'){ ?> class="active" <?php } ?> ><a href="#">Contas a Receber</a></li>
-          <li <?php if($dir=='materiais'){ ?> class="active" <?php } ?> ><a href="#">Materiais</a></li>
-          <li <?php if($dir=='mov_estoque'){ ?> class="active" <?php } ?> ><a href="#">Movimentação de Estoque</a></li>
-          <li <?php if($dir=='pessoas'){ ?> class="active" <?php } ?> ><a href="#">Pessoas</a></li>
-          <li <?php if($dir=='salas'){ ?> class="active" <?php } ?> ><a href="#">Salas</a></li>
-          <li <?php if($dir=='servicos'){ ?> class="active" <?php } ?> ><a href="#">Serviços</a></li>
-          <li <?php if($dir=='tipos_consulta'){ ?> class="active" <?php } ?> ><a href="#">Tipo de Consulta</a></li>
-          <li <?php if($dir=='tipos_atendimento'){ ?> class="active" <?php } ?> ><a href="#">Tipo de Atendimento</a></li>
+          <li <?php if($dir=='agenda'){ ?> class="active" <?php } ?> ><a href="/view/agenda/busca.php">Agenda</a></li>
+          <li <?php if($dir=='consultas'){ ?> class="active" <?php } ?> ><a href="/view/consultas/busca.php">Consultas</a></li>
+          <li <?php if($dir=='contas_receber'){ ?> class="active" <?php } ?> ><a href="/view/contas_receber/busca.php">Contas a Receber</a></li>
+          <li <?php if($dir=='materiais'){ ?> class="active" <?php } ?> ><a href="/view/materiais/busca.php">Materiais</a></li>
+          <li <?php if($dir=='mov_estoque'){ ?> class="active" <?php } ?> ><a href="/view/mov_estoque/busca.php">Movimentação de Estoque</a></li>
+          <li <?php if($dir=='pessoas'){ ?> class="active" <?php } ?> ><a href="/view/pessoas/busca.php">Pessoas</a></li>
+          <li <?php if($dir=='salas'){ ?> class="active" <?php } ?> ><a href="/view/salas/busca.php">Salas</a></li>
+          <li <?php if($dir=='servicos'){ ?> class="active" <?php } ?> ><a href="/view/servicos/busca.php">Serviços</a></li>
+          <li <?php if($dir=='tipos_atendimento'){ ?> class="active" <?php } ?> ><a href="/view/tipos_atendimento/busca.php">Tipo de Atendimento</a></li>
+          <li <?php if($dir=='tipos_consulta'){ ?> class="active" <?php } ?> ><a href="/view/tipos_consulta/busca.php">Tipo de Consulta</a></li>
         </ul>
       </div> <!-- /sidebar -->

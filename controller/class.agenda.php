@@ -6,7 +6,10 @@
 
     class Agenda extends AgendaModel {
       
-        public function __construct() { }
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function listarTodos() {
         
@@ -34,13 +37,15 @@
             
             $dados_agenda = $this->buscarAgenda();
             
-            $this->setData($dados_agenda["data"]);
-            $this->setDentistaId($dados_agenda["dentista_id"]);
-            $this->setPacienteId($dados_agenda["paciente_id"]);
-            $this->setSalaId($dados_agenda["sala_id"]);
-            $this->setTipoConsultaId($dados_agenda["tipoconsulta_id"]);
-            $this->setHorario($dados_agenda["horario"]);
-            $this->setObservacao($dados_agenda["observacao"]);
+            $this->setData($dados_agenda["DATA"]);
+            $this->setDentistaId($dados_agenda["DENTISTA_ID"]);
+            $this->setPacienteId($dados_agenda["PACIENTE_ID"]);
+            $this->setSalaId($dados_agenda["SALA_ID"]);
+            $this->setTipoConsultaId($dados_agenda["TIPOCONSULTA_ID"]);
+            $this->setHorario($dados_agenda["HORARIO"]);
+            $this->setObservacao($dados_agenda["OBSERVACAO"]);
+            
+            return ($ret_consulta['AGENDA_ID'] == $codigo);
         }
         
         public function incluir() {

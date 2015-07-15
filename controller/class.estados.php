@@ -6,7 +6,10 @@
 	
     class Estados extends EstadosModel {
       
-        public function __construct() {}
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
       
         public function listar() {
       
@@ -17,8 +20,8 @@
           
             $consulta = $this->buscarEstadosPorCod();
             
-            $this->setRazaoSocial($consulta["sigla_uf"]);
-            $this->setFantasia($consulta["nome"]);
+            $this->setRazaoSocial($consulta["SIGLA_UF"]);
+            $this->setFantasia($consulta["NOME"]);
         }
     
     }

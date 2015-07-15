@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -143,7 +143,7 @@
             
             Dao::fechaConexao();
             
-            return $retorno
+            return $retorno;
         }
         
         public function buscaServico() {
@@ -162,7 +162,7 @@
             
             Dao::fechaConexao();
             
-            return $retorno
+            return $retorno;
         }
       
     }

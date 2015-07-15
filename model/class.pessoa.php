@@ -290,12 +290,13 @@
             return $retorno;            
         }
         
-        public function validaSenha() {
+        public function validaSenhaAtual() {
 
-            $query = "SELECT pessoa_id FROM tbpessoa 
-                      WHERE pessoa_id = ?
-                      AND senha = ?";
-                
+            $query = "SELECT PESSOA_ID 
+                      FROM TBPESSOA
+                      WHERE PESSOA_ID = ?
+                      AND SENHA = ?";
+                           
             $sql = Dao::abreConexao()->prepare($query);
             
             $sql->bindValue(1, $this->getPessoaId(), PDO::PARAM_INT);
@@ -304,12 +305,15 @@
             $sql->execute();
             
             $dados_login = $sql->fetch(PDO::FETCH_ASSOC);
-            
-            $retorno = (count($dados_login) > 0);
-                
+			
+            if ($dados_login)
+                $retorno = $dados_login["PESSOA_ID"];
+            else
+                $retorno = 0;
+			
             Dao::fechaConexao();
             
-            return $retorno;
+            return ($retorno > 0);
         }        
         
         public function listarPessoas($campo, $valor, $nivel) {
@@ -360,29 +364,8 @@
         
         public function buscaPessoa() {
           
-            $query = "SELECT 
-                      tbpessoa.pessoa_id, 
-                      tbpessoa.nome,
-                      tbpessoa.endereco,
-                      tbpessoa.bairro,
-                      tbpessoa.cep,
-                      tbpessoa.cpf,
-                      tbpessoa.sexo,
-                      tbpessoa.dt_nascimento,
-                      tbpessoa.cidade_id,
-                      tbcidades.nome as cidade,
-                      tbcidades.sigla_uf as uf,
-                      tbpessoa.telefone,
-                      tbpessoa.celular,
-                      tbpessoa.email,
-                      tbpessoa.login,
-                      tbpessoa.senha,
-                      tbpessoa.ativo,
-                      tbpessoa.nivel
-                      FROM tbpessoa 
-                      JOIN tbcidades on (tbcidades.cidade_id = tbpessoa.cidade_id)
-                      WHERE tbpessoa.pessoa_id = ?
-                      ORDER BY tbpessoa.nome";
+            $query = "SELECT * FROM tbpessoa 
+                      WHERE pessoa_id = ?";
           
             $sql = Dao::abreConexao()->prepare($query);
             

@@ -4,8 +4,8 @@
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    include_once($_SERVER['DOCUMENT_ROOT']."../model/class.pessoa.php");
-    include_once($_SERVER['DOCUMENT_ROOT']."../controller/class.pessoa.php");
+    include_once("../model/class.pessoa.php");
+    include_once("../controller/class.pessoa.php");
     
     if (!isset($_SESSION))
        session_start();
@@ -23,7 +23,7 @@
 
             $pessoa = new Pessoa();
 
-            if ($pessoa->loginUsuario()) {
+            if ($pessoa->login()) {
                 if ($_SESSION["tentativas"] >= 3) {
                     
                     //comparação case-insensitive de strings

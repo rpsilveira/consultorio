@@ -1,6 +1,6 @@
 <?php 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultÃ³rio mÃ©dico/odontolÃ³gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -14,7 +14,7 @@
   
     <div class="well">
       <h1>Menu Principal</h1>
-      <h1><small>Gerenciamento de Consultório</small></h1>
+      <h1><small>Gerenciamento de ConsultÃ³rio</small></h1>
     </div>
     
       

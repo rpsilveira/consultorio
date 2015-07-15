@@ -6,7 +6,10 @@
 	
     class MovEstoque extends MovEstoqueModel{
       
-        public function __construct() { }
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
         
         public function incluir() {
           
@@ -33,10 +36,12 @@
             
             $dados_mov_estoque = $this->buscarMovEstoque();
                   
-            $this->setData($dados_mov_estoque["data"]);
-            $this->setMaterialId($dados_mov_estoque["material_id"]);
-            $this->setQuantidade($dados_mov_estoque["quantidade"]);
-            $this->setTipo($dados_mov_estoque["tipo"]);
+            $this->setData($dados_mov_estoque["DATA"]);
+            $this->setMaterialId($dados_mov_estoque["MATERIAL_ID"]);
+            $this->setQuantidade($dados_mov_estoque["QUANTIDADE"]);
+            $this->setTipo($dados_mov_estoque["TIPO"]);
+            
+            return ($ret_consulta['MOVESTOQUE_ID'] == $codigo);
         }
         
         public function alterar() {

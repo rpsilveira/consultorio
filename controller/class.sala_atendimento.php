@@ -6,8 +6,10 @@
 
     class SalaAtendimento extends SalaAtendimentoModel {
       
-        public function __construct() { }
-        
+        public function __construct() {
+            
+            date_default_timezone_set('America/Sao_Paulo');
+        }
 
         public function listarTodos() {
         
@@ -23,7 +25,9 @@
           
           $dados_sala = $this->buscarSala();
           
-          $this->setNome($dados_sala["nome"]);
+          $this->setNome($dados_sala["NOME"]);
+          
+          return ($ret_consulta['SALA_ID'] == $codigo);
         }
         
         public function incluir() {
