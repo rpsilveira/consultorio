@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -13,38 +13,35 @@
 
         public function listarTodos() {
         
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "tipoconsulta_id");
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
-            
-            return TipoConsultaModel::listarTipoConsulta($buscar_por, $busca);
+            return $this->listarTipoConsulta();
         }
         
         public function buscar($codigo) {
         
             $this->setTipoConsultaId($codigo);
             
-            $dados_tipo_consulta = $this->buscarTipoConsulta();
+            $ret_consulta = $this->buscarTipoConsulta();
             
-            $this->setTipoConsultaId($dados_tipo_consulta["TIPOCONSULTA_ID"]);	
-            $this->setDescricao($dados_tipo_consulta["DESCRICAO"]);	
-            $this->setValor($dados_tipo_consulta["VALOR"]);
+            $this->setTipoConsultaId($ret_consulta["TIPOCONSULTA_ID"]);	
+            $this->setDescricao($ret_consulta["DESCRICAO"]);	
+            $this->setValor($ret_consulta["VALOR"]);
             
             return ($ret_consulta['TIPOCONSULTA_ID'] == $codigo);
         }
         
         public function incluir() {
           
-            $this->setDescricao($_POST["descricao"]);
-            $this->setValor($_POST["valor"]);
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
             
-            return $this->incluiTipoConsulta();
+            return $this->incluirTipoConsulta();
         }
         
         public function alterar() {
           
-            $this->setTipoConsultaId($_POST["tipoconsulta_id"]);
-            $this->setDescricao($_POST["descricao"]);
-            $this->setValor($_POST["valor"]);
+            $this->setTipoConsultaId(trim(strip_tags(filter_input(INPUT_POST, "tipoconsulta_id"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
             
             return $this->alterarTipoConsulta();
         }

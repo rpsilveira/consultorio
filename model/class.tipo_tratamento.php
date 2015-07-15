@@ -101,19 +101,13 @@
             return $retorno;
         }
         
-        public function listarTipoTratamento($campo, $valor) {
+        public function listarTipoTratamento() {
         
-            $query = "SELECT 
-                      tipotratamento_id,
-                      descricao
+            $query = "SELECT *
                       FROM tbtipotratamento
-                      WHERE ? LIKE ?
                       ORDER BY descricao";
                  
             $sql = Dao::abreConexao()->prepare($query);
-            
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -126,9 +120,7 @@
         
         public function buscarTipoTratamento() {
           
-            $query = "SELECT 
-                      tipotratamento_id,
-                      descricao
+            $query = "SELECT *
                       FROM tbtipotratamento
                       WHERE tipotratamento_id = ?
                       ORDER BY descricao";

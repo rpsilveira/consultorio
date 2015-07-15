@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
@@ -13,34 +13,31 @@
 
         public function listarTodos() {
         
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "tipotratamento_id");
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
-            
-            return TipoTratamentoModel::listarTipoTratamento($buscar_por, $busca);
+            return $this->listarTipoTratamento();
         }
         
         public function buscar($codigo) {
         
             $this->setTipoTratamentoId($codigo);
             
-            $dados_tipo_tratamento = $this->buscarTipoTratamento();
+            $ret_consulta = $this->buscarTipoTratamento();
             
-            $this->setDescricao($dados_tipo_tratamento["DESCRICAO"]);	
+            $this->setDescricao($ret_consulta["DESCRICAO"]);	
             
             return ($ret_consulta['TIPOTRATAMENTO_ID'] == $codigo);
         }
         
         public function incluir(){
           
-            $this->setDescricao($_POST["descricao"]);
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
-            return $this->incluiTipoTratamento();
+            return $this->incluirTipoTratamento();
         }
         
         public function alterar() {
           
-            $this->setTipoTratamentoId($_POST["tipotratamento_id"]);
-            $this->setDescricao(utf8_decode($_POST["descricao"]));
+            $this->setTipoTratamentoId(trim(strip_tags(filter_input(INPUT_POST, "tipotratamento_id"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
             return $this->alterarTipoTratamento();
         } 

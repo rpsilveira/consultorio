@@ -111,20 +111,13 @@
             return $retorno;
         }
         
-        public function listarTipoConsulta($campo, $valor) {
+        public function listarTipoConsulta() {
         
-            $query = "SELECT 
-                      tipoconsulta_id,
-                      descricao,
-                      valor
+            $query = "SELECT *
                       FROM tbtipoconsulta
-                      WHERE ? LIKE ?
                       ORDER BY descricao";
                
             $sql = Dao::abreConexao()->prepare($query);
-            
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -137,10 +130,7 @@
         
         public function buscarTipoConsulta() {
           
-            $query = "SELECT 
-                      tipoconsulta_id,
-                      descricao,
-                      valor
+            $query = "SELECT *
                       FROM tbtipoconsulta
                       WHERE tipoconsulta_id = ?";
           

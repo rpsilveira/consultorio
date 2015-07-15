@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -18,8 +18,8 @@
         
         public function login() {
           
-            $this->setLogin($_POST["login"]);
-            $this->setSenha(md5($_POST["senha"]));
+            $this->setLogin(filter_input(INPUT_POST, "login"));
+            $this->setSenha(md5(filter_input(INPUT_POST, "senha")));
             
             $id = $this->validaLogin();
             
@@ -37,7 +37,7 @@
 
                 //seta o tempo limite de inatividade
                 $_SESSION["registro"] = time(); // armazena o momento em que foi autenticado
-                $_SESSION["limite"] = 900;  //limite para encerrar a sessão por inatividade (segundos)
+                $_SESSION["limite"] = 900;  //limite para encerrar a sessï¿½o por inatividade (segundos)
             }
             
             return $retorno;
@@ -46,7 +46,7 @@
         public function validaSenha(){
         
             $this->setPessoaId($_SESSION["usr_id"]);
-            $this->setSenha(md5($_POST["senha_atual"]));
+            $this->setSenha(md5(filter_input(INPUT_POST, "senha_atual")));
             
             return $this->validaSenhaAtual();
         }
@@ -83,42 +83,42 @@
         
             $this->setPessoaId($codigo);
             
-            $dados_pessoa = $this->buscaPessoa();
+            $ret_consulta = $this->buscaPessoa();
             
-            $this->setNome($dados_pessoa["NOME"]);
-            $this->setEndereco($dados_pessoa["ENDERECO"]);
-            $this->setBairro($dados_pessoa["BAIRRO"]);
-            $this->setCep($dados_pessoa["CEP"]);
-            $this->setCidadeId($dados_pessoa["CIDADE_ID"]);
-            $this->setTelefone($dados_pessoa["TELEFONE"]);
-            $this->setCelular($dados_pessoa["CELULAR"]);
-            $this->setEmail($dados_pessoa["EMAIL"]);
-            $this->setNivel($dados_pessoa["NIVEL"]);
-            $this->setAtivo($dados_pessoa["ATIVO"]);
-            $this->setCpf($dados_pessoa["CPF"]);	
-            $this->setDataNascimento($dados_pessoa["DT_NASCIMENTO"]);
-            $this->setSexo($dados_pessoa["SEXO"]);
-            $this->setLogin($dados_pessoa["LOGIN"]);
-            $this->setSenha($dados_pessoa["SENHA"]);
+            $this->setNome($ret_consulta["NOME"]);
+            $this->setEndereco($ret_consulta["ENDERECO"]);
+            $this->setBairro($ret_consulta["BAIRRO"]);
+            $this->setCep($ret_consulta["CEP"]);
+            $this->setCidadeId($ret_consulta["CIDADE_ID"]);
+            $this->setTelefone($ret_consulta["TELEFONE"]);
+            $this->setCelular($ret_consulta["CELULAR"]);
+            $this->setEmail($ret_consulta["EMAIL"]);
+            $this->setNivel($ret_consulta["NIVEL"]);
+            $this->setAtivo($ret_consulta["ATIVO"]);
+            $this->setCpf($ret_consulta["CPF"]);	
+            $this->setDataNascimento($ret_consulta["DT_NASCIMENTO"]);
+            $this->setSexo($ret_consulta["SEXO"]);
+            $this->setLogin($ret_consulta["LOGIN"]);
+            $this->setSenha($ret_consulta["SENHA"]);
             
             return ($ret_consulta['pessoa_id'] == $codigo);
         }
         
         public function incluir() {
           
-            $this->setNome($_POST["nome"]);
-            $this->setEndereco($_POST["endereco"]);
-            $this->setBairro($_POST["bairro"]);
-            $this->setCep($_POST["cep"]);
-            $this->setCidadeId($_POST["cidade_id"]);
-            $this->setTelefone($_POST["telefone"]);
-            $this->setCelular($_POST["celular"]);
-            $this->setEmail($_POST["email"]);
-            $this->setCpf($_POST["cpf"]);
-            $this->setDataNascimento(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setSexo($_POST["sexo"]);
-            $this->setNivel($_POST["nivel"]);
-            $this->setLogin($_POST["login"]);
+            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setEndereco(trim(strip_tags(filter_input(INPUT_POST, "endereco"))));
+            $this->setBairro(trim(strip_tags(filter_input(INPUT_POST, "bairro"))));
+            $this->setCep(trim(strip_tags(filter_input(INPUT_POST, "cep"))));
+            $this->setCidadeId(trim(strip_tags(filter_input(INPUT_POST, "cidade_id"))));
+            $this->setTelefone(trim(strip_tags(filter_input(INPUT_POST, "telefone"))));
+            $this->setCelular(trim(strip_tags(filter_input(INPUT_POST, "celular"))));
+            $this->setEmail(trim(strip_tags(filter_input(INPUT_POST, "email"))));
+            $this->setCpf(trim(strip_tags(filter_input(INPUT_POST, "cpf"))));
+            $this->setDataNascimento(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setSexo(trim(strip_tags(filter_input(INPUT_POST, "sexo"))));
+            $this->setNivel(trim(strip_tags(filter_input(INPUT_POST, "nivel"))));
+            $this->setLogin(trim(strip_tags(filter_input(INPUT_POST, "login"))));
             
             $resultado = $this->incluiPessoa();
             
@@ -128,28 +128,28 @@
         public function alteraSenha() {
         
             $this->setPessoaId($_SESSION["usr_id"]);
-            $this->setSenha(md5($_POST["nova_senha"]));
+            $this->setSenha(md5(filter_input(INPUT_POST, "nova_senha")));
             
             return $this->alterarSenha();
         }
         
         public function alterar() {
           
-            $this->setPessoaId($_POST["pessoa_id"]);
-            $this->setNome($_POST["nome"]);
-            $this->setEndereco($_POST["endereco"]);
-            $this->setBairro($_POST["bairro"]);
-            $this->setCep($_POST["cep"]);
-            $this->setCidadeId($_POST["cidade_id"]);
-            $this->setTelefone($_POST["telefone"]);
-            $this->setCelular($_POST["celular"]);
-            $this->setEmail($_POST["email"]);
-            $this->setCpf($_POST["cpf"]);
-            $this->setDataNascimento(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setSexo($_POST["sexo"]);
-            $this->setNivel($_POST["nivel"]);
-            $this->setAtivo($_POST["ativo"]);
-            $this->setLogin($_POST["login"]);
+            $this->setPessoaId(trim(strip_tags(filter_input(INPUT_POST, "pessoa_id"))));
+            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setEndereco(trim(strip_tags(filter_input(INPUT_POST, "endereco"))));
+            $this->setBairro(trim(strip_tags(filter_input(INPUT_POST, "bairro"))));
+            $this->setCep(trim(strip_tags(filter_input(INPUT_POST, "cep"))));
+            $this->setCidadeId(trim(strip_tags(filter_input(INPUT_POST, "cidade_id"))));
+            $this->setTelefone(trim(strip_tags(filter_input(INPUT_POST, "telefone"))));
+            $this->setCelular(trim(strip_tags(filter_input(INPUT_POST, "celular"))));
+            $this->setEmail(trim(strip_tags(filter_input(INPUT_POST, "email"))));
+            $this->setCpf(trim(strip_tags(filter_input(INPUT_POST, "cpf"))));
+            $this->setDataNascimento(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setSexo(trim(strip_tags(filter_input(INPUT_POST, "sexo"))));
+            $this->setNivel(trim(strip_tags(filter_input(INPUT_POST, "nivel"))));
+            $this->setAtivo(trim(strip_tags(filter_input(INPUT_POST, "ativo"))));
+            $this->setLogin(trim(strip_tags(filter_input(INPUT_POST, "login"))));
             
             return $this->alterarPessoa();
         }

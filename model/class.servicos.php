@@ -6,10 +6,10 @@
 
     include_once('class.dao.php');
 
-    class ServicosModel{
+    class ServicoModel{
       
         private $servico_id;
-        private $nome;
+        private $descricao;
         private $valor;
         private $tipotratamento_id;
         
@@ -18,8 +18,8 @@
         public function setServicoId($servico_id){
           $this->servico_id = $servico_id;
         }
-        public function setNome($nome){
-          $this->nome = $nome;
+        public function setDescricao($descricao){
+          $this->descricao = $descricao;
         }
         public function setValor($valor){
           $this->valor = $valor;
@@ -31,8 +31,8 @@
         public function getServicoId(){
           return $this->servico_id;
         }
-        public function getNome(){
-          return $this->nome;
+        public function getDescricao(){
+          return $this->descricao;
         }
         public function getValor(){
           return $this->valor;
@@ -45,14 +45,14 @@
         
             try {
         
-                $query = "INSERT INTO tbservicos(nome, tipotratamento_id, valor)
+                $query = "INSERT INTO tbservicos(descricao, tipotratamento_id, valor)
                           VALUES (?, ?, ?)";
                 
                 $db = Dao::abreConexao();
                 
                 $sql = $db->prepare($query);
                 
-                $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+                $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
                 $sql->bindValue(2, $this->getTipoTratamentoId(), PDO::PARAM_INT);
                 $sql->bindValue(3, $this->getValor(), PDO::PARAM_STR);
                 
@@ -75,14 +75,14 @@
         public function alterarServico() {
           
             $query = "UPDATE tbservicos SET 
-                      nome = ?,
+                      descricao = ?,
                       tipotratamento_id = ?,
                       valor = ?
                       WHERE servico_id = ?";
           
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+            $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
             $sql->bindValue(2, $this->getTipoTratamentoId(), PDO::PARAM_INT);
             $sql->bindValue(3, $this->getValor(), PDO::PARAM_STR);
             $sql->bindValue(4, $this->getServicoId(), PDO::PARAM_INT);
@@ -119,23 +119,18 @@
             return $retorno;
         }
         
-        public function listarServicos($campo, $valor) {
+        public function listarServicos() {
           
-            $query = "SELECT 
-                      tbservicos.servico_id,
-                      tbservicos.nome,
-                      tbservicos.tipotratamento_id,
-                      tbservicos.valor,
-                      tbtipotratamento.descricao AS tipotratamento
-                      FROM tbservicos
-                      LEFT JOIN tbtipotratamento ON (tbtipotratamento.tipotratamento_id = tbservicos.tipotratamento_id)
-                      WHERE ? LIKE ?
-                      ORDER BY nome";
+            $query = "SELECT
+                      S.SERVICO_ID,
+                      S.DESCRICAO,
+                      S.VALOR,
+                      T.DESCRICAO AS TIPOTRATAMENTO
+                      FROM TBSERVICOS S
+                      LEFT JOIN TBTIPOTRATAMENTO T ON (T.TIPOTRATAMENTO_ID = S.TIPOTRATAMENTO_ID)
+                      ORDER BY S.DESCRICAO";
                
             $sql = Dao::abreConexao()->prepare($query);
-            
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -146,9 +141,9 @@
             return $retorno;
         }
         
-        public function buscaServico() {
+        public function buscarServico() {
         
-            $query = "SELECT servico_id, nome, tipotratamento_id, valor
+            $query = "SELECT *
                       FROM tbservicos
                       WHERE servico_id = ?";
                

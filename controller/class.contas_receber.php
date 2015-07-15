@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -33,28 +33,28 @@
         
             $this->setContaId($codigo);
             
-            $dados_conta = $this->buscarConta();
+            $ret_consulta = $this->buscarConta();
             
-            $this->setPacienteId($dados_conta["PACIENTE_ID"]);
-            $this->setDtEmissao($dados_conta["DT_EMISSAO"]);
-            $this->setDtVencimento($dados_conta["DT_VENCIMENTO"]);
-            $this->setDtBaixa($dados_conta["DT_BAIXA"]);
-            $this->setValor($dados_conta["VALOR"]);
-            $this->setJuros($dados_conta["JUROS"]);
-            $this->setDesconto($dados_conta["DESCONTO"]);
-            $this->setValorPago($dados_conta["VALOR_PAGO"]);
+            $this->setPacienteId($ret_consulta["PACIENTE_ID"]);
+            $this->setDtEmissao($ret_consulta["DT_EMISSAO"]);
+            $this->setDtVencimento($ret_consulta["DT_VENCIMENTO"]);
+            $this->setDtBaixa($ret_consulta["DT_BAIXA"]);
+            $this->setValor($ret_consulta["VALOR"]);
+            $this->setJuros($ret_consulta["JUROS"]);
+            $this->setDesconto($ret_consulta["DESCONTO"]);
+            $this->setValorPago($ret_consulta["VALOR_PAGO"]);
             
             return ($ret_consulta['CONTA_ID'] == $codigo);
         }
         
         public function incluir() {
           
-            $this->setPacienteId($_POST["paciente_id"]);
-            $this->setDtEmissao(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setDtVencimento(implode("-", array_reverse(explode("/", $_POST["data_2"]))));
-            $this->setValor($_POST["valor"]);
-            $this->setJuros($_POST["juros"]);
-            $this->setDesconto($_POST["desconto"]);
+            $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
+            $this->setDtEmissao(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setDtVencimento(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_2")))));
+            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
+            $this->setJuros(trim(strip_tags(filter_input(INPUT_POST, "juros"))));
+            $this->setDesconto(trim(strip_tags(filter_input(INPUT_POST, "desconto"))));
             
             return $this->incluirConta();
         }
@@ -69,13 +69,13 @@
         
         public function alterar() {
           
-            $this->setContaId($_POST["conta_id"]);
-            $this->setPacienteId($_POST["paciente_id"]);
-            $this->setDtEmissao(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setDtVencimento(implode("-", array_reverse(explode("/", $_POST["data_2"]))));
-            $this->setValor($_POST["valor"]);
-            $this->setJuros($_POST["juros"]);
-            $this->setDesconto($_POST["desconto"]);
+            $this->setContaId(trim(strip_tags(filter_input(INPUT_POST, "conta_id"))));
+            $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
+            $this->setDtEmissao(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setDtVencimento(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_2")))));
+            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
+            $this->setJuros(trim(strip_tags(filter_input(INPUT_POST, "juros"))));
+            $this->setDesconto(trim(strip_tags(filter_input(INPUT_POST, "desconto"))));
             
             return $this->alterarConta();
         }
@@ -91,8 +91,8 @@
 
             $this->setContaId($codigo);
 
-            $this->setDtBaixa(implode("-", array_reverse(explode("/", $_POST["dt_baixa"]))));
-            $this->setValorPago($_POST["valor_pago"]);
+            $this->setDtBaixa(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "dt_baixa")))));
+            $this->setValorPago(trim(strip_tags(filter_input(INPUT_POST, "valor_pago"))));
 
             return $this->baixarConta();
         }

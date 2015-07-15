@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -28,15 +28,15 @@
         
             $this->setConsultaId($codigo);
             
-            $dados_consulta = $this->buscarConsulta();
+            $ret_consulta = $this->buscarConsulta();
             
-            $this->setData($dados_consulta["DATA"]);
-            $this->setDentistaId($dados_consulta["DENTISTA_ID"]);
-            $this->setPacienteId($dados_consulta["PACIENTE_ID"]);
-            $this->setSalaId($dados_consulta["SALA_ID"]);
-            $this->setTipoConsultaId($dados_consulta["TIPOCONSULTA_ID"]);
-            $this->setHorario($dados_consulta["HORARIO"]);
-            $this->setObservacao($dados_consulta["OBSERVACAO"]);
+            $this->setData($ret_consulta["DATA"]);
+            $this->setDentistaId($ret_consulta["DENTISTA_ID"]);
+            $this->setPacienteId($ret_consulta["PACIENTE_ID"]);
+            $this->setSalaId($ret_consulta["SALA_ID"]);
+            $this->setTipoConsultaId($ret_consulta["TIPOCONSULTA_ID"]);
+            $this->setHorario($ret_consulta["HORARIO"]);
+            $this->setObservacao($ret_consulta["OBSERVACAO"]);
             
             return ($ret_consulta['CONSULTA_ID'] == $codigo);
         }
@@ -57,13 +57,13 @@
         
         public function incluir() {
           
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setDentistaId($_POST["dentista_id"]);
-            $this->setPacienteId($_POST["paciente_id"]);
-            $this->setSalaId($_POST["sala_id"]);
-            $this->setHorario($_POST["horario"]);
-            $this->setTipoConsultaId($_POST["tipoconsulta_id"]);
-            $this->setObservacao($_POST["observacao"]);
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setDentistaId(trim(strip_tags(filter_input(INPUT_POST, "dentista_id"))));
+            $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
+            $this->setSalaId(trim(strip_tags(filter_input(INPUT_POST, "sala_id"))));
+            $this->setHorario(trim(strip_tags(filter_input(INPUT_POST, "horario"))));
+            $this->setTipoConsultaId(trim(strip_tags(filter_input(INPUT_POST, "tipoconsulta_id"))));
+            $this->setObservacao(trim(strip_tags(filter_input(INPUT_POST, "observacao"))));
             
             $mat_codigo = isset($_POST["mat_codigo"]) ? $_POST["mat_codigo"] : array();
             $mat_quant = isset($_POST["mat_quant"]) ? $_POST["mat_quant"] : array();

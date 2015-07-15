@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
@@ -13,10 +13,10 @@
         
         public function incluir() {
           
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setMaterialId($_POST["material_id"]);
-            $this->setQuantidade($_POST["quantidade"]);
-            $this->setTipo($_POST["tipo"]);
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
+            $this->setQuantidade(trim(strip_tags(filter_input(INPUT_POST, "quantidade"))));
+            $this->setTipo(trim(strip_tags(filter_input(INPUT_POST, "tipo"))));
             
             return $this->incluirMovEstoque();
         }
@@ -34,23 +34,23 @@
         
             $this->setMovEstoqueId($codigo);
             
-            $dados_mov_estoque = $this->buscarMovEstoque();
+            $ret_consulta = $this->buscarMovEstoque();
                   
-            $this->setData($dados_mov_estoque["DATA"]);
-            $this->setMaterialId($dados_mov_estoque["MATERIAL_ID"]);
-            $this->setQuantidade($dados_mov_estoque["QUANTIDADE"]);
-            $this->setTipo($dados_mov_estoque["TIPO"]);
+            $this->setData($ret_consulta["DATA"]);
+            $this->setMaterialId($ret_consulta["MATERIAL_ID"]);
+            $this->setQuantidade($ret_consulta["QUANTIDADE"]);
+            $this->setTipo($ret_consulta["TIPO"]);
             
             return ($ret_consulta['MOVESTOQUE_ID'] == $codigo);
         }
         
         public function alterar() {
           
-            $this->setMovEstoqueId($_POST["movestoque_id"]);
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setMaterialId($_POST["material_id"]);
-            $this->setQuantidade($_POST["quantidade"]);
-            $this->setTipo($_POST["tipo"]);
+            $this->setMovEstoqueId(trim(strip_tags(filter_input(INPUT_POST, "movestoque_id"))));
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
+            $this->setQuantidade(trim(strip_tags(filter_input(INPUT_POST, "quantidade"))));
+            $this->setTipo(trim(strip_tags(filter_input(INPUT_POST, "tipo"))));
             
             return $this->alterarMovEstoque();
         }

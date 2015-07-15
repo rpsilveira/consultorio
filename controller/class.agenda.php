@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -50,27 +50,27 @@
         
         public function incluir() {
           
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setDentistaId($_POST["dentista_id"]);
-            $this->setPacienteId($_POST["paciente_id"]);
-            $this->setSalaId($_POST["sala_id"]);
-            $this->setTipoConsultaId($_POST["tipoconsulta_id"]);
-            $this->setHorario($_POST["horario"]);
-            $this->setObservacao($_POST["observacao"]);
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setDentistaId(trim(strip_tags(filter_input(INPUT_POST, "dentista_id"))));
+            $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
+            $this->setSalaId(trim(strip_tags(filter_input(INPUT_POST, "sala_id"))));
+            $this->setTipoConsultaId(trim(strip_tags(filter_input(INPUT_POST, "tipoconsulta_id"))));
+            $this->setHorario(trim(strip_tags(filter_input(INPUT_POST, "horario"))));
+            $this->setObservacao(trim(strip_tags(filter_input(INPUT_POST, "observacao"))));
             
             return $this->incluiAgenda();
         }
         
         public function alterar() {
           
-            $this->setAgendaId($_POST["agenda_id"]);
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setDentistaId($_POST["dentista_id"]);
-            $this->setPacienteId($_POST["paciente_id"]);
-            $this->setSalaId($_POST["sala_id"]);
-            $this->setTipoConsultaId($_POST["tipoconsulta_id"]);
-            $this->setHorario($_POST["horario"]);
-            $this->setObservacao($_POST["observacao"]);
+            $this->setAgendaId(trim(strip_tags(filter_input(INPUT_POST, "agenda_id"))));
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setDentistaId(trim(strip_tags(filter_input(INPUT_POST, "dentista_id"))));
+            $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
+            $this->setSalaId(trim(strip_tags(filter_input(INPUT_POST, "sala_id"))));
+            $this->setTipoConsultaId(trim(strip_tags(filter_input(INPUT_POST, "tipoconsulta_id"))));
+            $this->setHorario(trim(strip_tags(filter_input(INPUT_POST, "horario"))));
+            $this->setObservacao(trim(strip_tags(filter_input(INPUT_POST, "observacao"))));
             
             return $this->alterarAgenda();
         }
@@ -92,8 +92,8 @@
         public function remarcar($codigo) {
           
             $this->setAgendaId($codigo);
-            $this->setData(implode("-", array_reverse(explode("/", $_POST["data_1"]))));
-            $this->setHorario($_POST["novo_horario"]);
+            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setHorario(trim(strip_tags(filter_input(INPUT_POST, "novo_horario"))));
 
             return $this->remarcarAgenda();
         }

@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -13,34 +13,31 @@
 
         public function listarTodos() {
         
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "sala_id");
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
-            
-            return SalaAtendimentoModel::listarSala($buscar_por, $busca);
+            return $this->listarSalas();
         }
         
         public function buscar($codigo) {
         
           $this->setSalaId($codigo);
           
-          $dados_sala = $this->buscarSala();
+          $ret_consulta = $this->buscarSala();
           
-          $this->setNome($dados_sala["NOME"]);
+          $this->setDescricao($ret_consulta["DESCRICAO"]);
           
           return ($ret_consulta['SALA_ID'] == $codigo);
         }
         
         public function incluir() {
           
-            $this->setNome($_POST["nome"]);
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
-            return $this->incluiSala();
+            return $this->incluirSala();
         }
         
         public function alterar() {
           
-            $this->setSalaId($_POST["sala_id"]);
-            $this->setNome(utf8_decode($_POST["nome"]));
+            $this->setSalaId(trim(strip_tags(filter_input(INPUT_POST, "sala_id"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
             return $this->alterarSala();
         }

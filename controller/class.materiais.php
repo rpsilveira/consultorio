@@ -1,6 +1,6 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -23,31 +23,31 @@
         
             $this->setMaterialId($codigo);
             
-            $dados_material = $this->buscarMaterial();
+            $ret_consulta = $this->buscarMaterial();
             
-            $this->setNome($dados_material["NOME"]);
-            $this->setSaldoMin($dados_material["SALDO_MIN"]);
-            $this->setSaldoAtual($dados_material["SALDO_ATUAL"]);
-            $this->setValor($dados_material["VALOR"]);
+            $this->setNome($ret_consulta["NOME"]);
+            $this->setSaldoMin($ret_consulta["SALDO_MIN"]);
+            $this->setSaldoAtual($ret_consulta["SALDO_ATUAL"]);
+            $this->setValor($ret_consulta["VALOR"]);
             
             return ($ret_consulta['MATERIAL_ID'] == $codigo);
         }
         
         public function incluir(){
           
-            $this->setNome($_POST["nome"]);
-            $this->setSaldoMin($_POST["saldo_min"]);
-            $this->setValor($_POST["valor"]);
+            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setSaldoMin(trim(strip_tags(filter_input(INPUT_POST, "saldo_min"))));
+            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
             
             return $this->incluiMaterial();
         }
         
         public function alterar() {
           
-            $this->setMaterialId($_POST["material_id"]);
-            $this->setNome($_POST["nome"]);
-            $this->setSaldoMin($_POST["saldo_min"]);
-            $this->setValor($_POST["valor"]);
+            $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
+            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setSaldoMin(trim(strip_tags(filter_input(INPUT_POST, "saldo_min"))));
+            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
             
             return $this->alterarMaterial();
         }

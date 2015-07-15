@@ -1,43 +1,40 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consultório médico/odontológico  */
+    /* Gerenciamento de consultï¿½rio mï¿½dico/odontolï¿½gico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
-    class Servicos extends ServicosModel{
+    class Servico extends ServicoModel{
     
         public function __construct() {
             
             date_default_timezone_set('America/Sao_Paulo');
         }
         
-        public function inserir() {
+        public function incluir() {
 
-            $this->setNome($_POST["nome"]);
-            $this->setTipoTratamentoId($_POST["tipotratamento_id"]);
-            $this->setValor($_POST["valor"]);
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
+            $this->setTipoTratamentoId(trim(strip_tags(filter_input(INPUT_POST, "tipotratamento_id"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
             
-            return $this->inserirServicos();
+            return $this->incluirServico();
         }
         
         public function listarTodos() {
           
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "servico_id");
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
-            
-            return ServicosModel::buscaServicos($buscar_por, $busca);
+            return $this->listarServicos();
         }
         
-        public function buscarPorCodigo($codigo) {
+        public function buscar($codigo) {
         
             $this->setServicoId($codigo);
           
-            $consulta = $this->buscaServicosCodigo();
+            $ret_consulta = $this->buscarServico();
             
-            $this->setServicoId($consulta["SERVICO_ID"]);
-            $this->setNome($consulta["NOME"]);
-            $this->setTipoTratamentoId($consulta["TIPOTRATAMENTO_ID"]);	
-            $this->setValor($consulta["VALOR"]);
+            $this->setServicoId($ret_consulta["SERVICO_ID"]);
+            $this->setDescricao($ret_consulta["DESCRICAO"]);
+            $this->setTipoTratamentoId($ret_consulta["TIPOTRATAMENTO_ID"]);	
+            $this->setValor($ret_consulta["VALOR"]);
             
             return ($ret_consulta['SERVICO_ID'] == $codigo);
         }
@@ -51,10 +48,10 @@
         
         public function alterar() {
           
-            $this->setServicoId($_POST["servico_id"]);
-            $this->setNome($_POST["nome"]);
-            $this->setTipoTratamentoId($_POST["tipotratamento_id"]);
-            $this->setValor($_POST["valor"]);
+            $this->setServicoId(trim(strip_tags(filter_input(INPUT_POST, "servico_id"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
+            $this->setTipoTratamentoId(trim(strip_tags(filter_input(INPUT_POST, "tipotratamento_id"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
             
             return $this->alterarServico();
         }

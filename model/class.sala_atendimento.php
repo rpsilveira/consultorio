@@ -9,7 +9,7 @@
     class SalaAtendimentoModel {
       
         private $sala_id;
-        private $nome;
+        private $descricao;
         
         public function __construct() { }
         
@@ -17,29 +17,29 @@
         public function setSalaId($sala_id) {
           $this->sala_id = $sala_id;
         }
-        public function setNome($nome) {
-          $this->nome = $nome;
+        public function setDescricao($descricao) {
+          $this->descricao = $descricao;
         }
         
         //getters
         public function getSalaId() {
           return $this->sala_id;
         }
-        public function getNome() {
-          return $this->nome;
+        public function getDescricao() {
+          return $this->descricao;
         }
         
         public function incluirSala() {
         
             try {
         
-                $query = "INSERT INTO tbsalasatendimento(nome) VALUES(?)";
+                $query = "INSERT INTO tbsalasatendimento(descricao) VALUES(?)";
                 
                 $db = Dao::abreConexao();
                 
                 $sql = $db->prepare($query);
                 
-                $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+                $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
                 
                 $retorno = $sql->execute();
                 
@@ -60,12 +60,12 @@
         public function alterarSala() {
           
             $query = "UPDATE tbsalasatendimento 
-                      SET nome = ?
+                      SET descricao = ?
                       WHERE sala_id = ?"; 
           
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+            $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
             $sql->bindValue(2, $this->getSalaId(), PDO::PARAM_INT);
             
             $retorno = $sql->execute();
@@ -100,19 +100,13 @@
             return $retorno;
         }
         
-        public function listarSalas($campo, $valor) {
+        public function listarSalas() {
         
-            $query = "SELECT 
-                      sala_id,
-                      nome
+            $query = "SELECT *
                       FROM tbsalasatendimento
-                      WHERE ? LIKE ?
-                      ORDER BY nome";
+                      ORDER BY descricao";
                
             $sql = Dao::abreConexao()->prepare($query);
-            
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -125,9 +119,7 @@
         
         public function buscarSala() {
           
-            $query = "SELECT 
-                      sala_id,
-                      nome
+            $query = "SELECT *
                       FROM tbsalasatendimento
                       WHERE sala_id = ?";
           
