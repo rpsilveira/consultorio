@@ -29,51 +29,45 @@
           "sDom": "t<'row'<'col-md-6'i><'col-md-6'p>>",
           "sPaginationType": "bootstrap"
         });
-      });
+      });      
     </script>
     
     <style>
-    .pagination {
-          margin:0 ! important;
-    }</style> 
+      .pagination {
+         margin:0 ! important;
+      }
+    </style> 
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
   <legend class="page-header">Listagem de Salas de Atendimento
     <div class="btn-group pull-right">
       <a class="btn btn-success" title="Novo registro" href="cadastro.php"><span class="glyphicon glyphicon-file"></span> Novo</a>
-    </div>  
+    </div>
   </legend>
-
-  <div class="table-responsive">
+  
+  <?php if ($cont > 0){ ?>
+    <p class="text-muted"><i>(Clique sobre o registro para editar/excluir)</i></p>
+  <?php } ?>
+  
+  <div class="table">
     <table class="table table-striped table-condensed table-hover" id="listagem">
       <thead>
         <tr>
           <th class="col-sm-1">Código</th>
           <th class="col-sm-4">Descrição</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($salas as $row) { ?>
-          <tr>
+          <tr title="Manutenção no registro" style="cursor:pointer" onClick="document.location.href='cadastro.php?id=<?php echo $row["SALA_ID"];?>'">
             <td><?php echo $row["SALA_ID"]; ?></td>
             <td><?php echo $row["DESCRICAO"]; ?></td>
-            <td>
-              <div class="text-center">
-                <div class="btn-group btn-group-xs">
-                  <a class="btn btn-primary" title="Editar registro" href="cadastro.php?id=<?php echo $row["SALA_ID"];?>"><span class="glyphicon glyphicon-edit"></span> Editar</a>
-                  <a class="btn btn-danger" title="Excluir registro" onclick="javascript: if(confirm('Confirma a exclusão do registro?')) location.href='cadastro.php?acao=excluir&id=<?php echo $row["SALA_ID"];?>'">
-                    <span class="glyphicon glyphicon-trash"></span> Excluir
-                  </a>
-                </div>
-              </div>
-            </td>            
           </tr>
         <?php } ?>
       </tbody>
     </table>
-  </div> <!-- /table-responsive --> 
+  </div> <!-- /table --> 
   <div class="alert alert-success">
     <strong><?php echo "$cont Registro(s) encontrado(s)."; ?></strong>
   </div>

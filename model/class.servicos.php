@@ -119,7 +119,7 @@
             return $retorno;
         }
         
-        public function listarServicos() {
+        public function listarServicos($campo, $valor) {
           
             $query = "SELECT
                       S.SERVICO_ID,
@@ -128,9 +128,12 @@
                       T.DESCRICAO AS TIPOTRATAMENTO
                       FROM TBSERVICOS S
                       LEFT JOIN TBTIPOTRATAMENTO T ON (T.TIPOTRATAMENTO_ID = S.TIPOTRATAMENTO_ID)
+                      WHERE S.". $campo ." LIKE ?
                       ORDER BY S.DESCRICAO";
                
             $sql = Dao::abreConexao()->prepare($query);
+            
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             

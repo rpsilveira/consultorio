@@ -34,9 +34,9 @@
             return $this->incluirSala();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setSalaId(trim(strip_tags(filter_input(INPUT_POST, "sala_id"))));
+            $this->setSalaId($codigo);
             $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
             return $this->alterarSala();

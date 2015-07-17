@@ -125,7 +125,7 @@
               <li><a href="/view/mov_estoque/busca.php">Mov. Estoque</a></li>
               <li><a href="/view/pessoas/busca.php">Pessoas</a></li>
               <li><a href="/view/salas/listagem.php">Salas</a></li>
-              <li><a href="/view/servicos/listagem.php">Serviços</a></li>
+              <li><a href="/view/servicos/busca.php">Serviços</a></li>
               <li><a href="/view/tipos_consulta/listagem.php">Tipo Consulta</a></li>
               <li><a href="/view/tipos_tratamento/listagem.php">Tipo Tratamento</a></li>
             </ul>
@@ -221,7 +221,7 @@
           <li <?php if($dir=='mov_estoque'){ ?> class="active" <?php } ?> ><a href="/view/mov_estoque/busca.php">Movimentação de Estoque</a></li>
           <li <?php if($dir=='pessoas'){ ?> class="active" <?php } ?> ><a href="/view/pessoas/busca.php">Pessoas</a></li>
           <li <?php if($dir=='salas'){ ?> class="active" <?php } ?> ><a href="/view/salas/listagem.php">Salas</a></li>
-          <li <?php if($dir=='servicos'){ ?> class="active" <?php } ?> ><a href="/view/servicos/listagem.php">Serviços</a></li>
+          <li <?php if($dir=='servicos'){ ?> class="active" <?php } ?> ><a href="/view/servicos/busca.php">Serviços</a></li>
           <li <?php if($dir=='tipos_consulta'){ ?> class="active" <?php } ?> ><a href="/view/tipos_consulta/listagem.php">Tipo de Consulta</a></li>
           <li <?php if($dir=='tipos_tratamento'){ ?> class="active" <?php } ?> ><a href="/view/tipos_tratamento/listagem.php">Tipo de Tratamento</a></li>
         </ul>

@@ -61,9 +61,9 @@
             return $this->incluiAgenda();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setAgendaId(trim(strip_tags(filter_input(INPUT_POST, "agenda_id"))));
+            $this->setAgendaId($codigo);
             $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
             $this->setDentistaId(trim(strip_tags(filter_input(INPUT_POST, "dentista_id"))));
             $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));

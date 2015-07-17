@@ -42,9 +42,9 @@
             return $this->incluiMaterial();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
+            $this->setMaterialId($codigo);
             $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
             $this->setSaldoMin(trim(strip_tags(filter_input(INPUT_POST, "saldo_min"))));
             $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));

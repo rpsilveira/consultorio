@@ -37,9 +37,9 @@
             return $this->incluirTipoConsulta();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setTipoConsultaId(trim(strip_tags(filter_input(INPUT_POST, "tipoconsulta_id"))));
+            $this->setTipoConsultaId($codigo);
             $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
             

@@ -17,7 +17,7 @@
     $tipos = $tipotrat->listarTodos();
 
     if ($codigo > 0)
-      $servico->buscar($codigo);
+      $servico->buscarPorCodigo($codigo);
 
     if (($acao == "excluir")&&($codigo > 0)) {
     
@@ -73,6 +73,11 @@
     <legend class="page-header">Cadastro de Serviço - <?php echo ($codigo == 0) ? "incluir" : "editar" ?>
       <div class="btn-group pull-right">
         <a class="btn btn-success" title="Novo registro" href="cadastro.php"><span class="glyphicon glyphicon-file"></span> Novo</a>
+        <?php if ($codigo > 0){ ?>
+          <a class="btn btn-danger" title="Excluir registro" onclick="javascript: if(confirm('Confirma a exclusão do registro?')) location.href='cadastro.php?acao=excluir&id=<?php echo $codigo;?>'">
+            <span class="glyphicon glyphicon-trash"></span> Excluir
+          </a>
+        <?php } ?>
       </div>
     </legend>
   </div>
@@ -84,12 +89,12 @@
       <div class="row">
         <div class="form-group col-lg-3">
           <span>Código:</span>
-          <input type="text" name="servico_id" class="form-control" value="<?php echo $servico->getServicoId(); ?>" readonly />
+          <input type="text" name="servico_id" class="form-control" value="<?php echo $servico->getServicoId(); ?>" disabled />
         </div>
       </div>
 
       <div class="row">
-        <div class="form-group col-lg-12">
+        <div class="form-group col-lg-10">
           <span>Descrição:</span>
           <input type="text" name="descricao" class="form-control" maxlength="80" value="<?php echo $servico->getDescricao(); ?>" required autofocus
           data-bv-stringlength="true"
@@ -104,7 +109,7 @@
           <input type="text" name="valor" class="form-control" maxlength="10" value="<?php echo number_format($servico->getValor(), 2, ',', ''); ?>" required />
         </div>
         
-        <div class="form-group col-lg-9">
+        <div class="form-group col-lg-7">
           <span>Tipo de Tratamento:</span>
           <select class="form-control" name="tipotratamento_id">
             <?php foreach ($tipos as $row){ ?>

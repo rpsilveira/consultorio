@@ -156,13 +156,12 @@
                       LEFT JOIN tbpessoa paciente ON (paciente.pessoa_id = tbconsulta.paciente_id)					  
                       LEFT JOIN tbsalasatendimento ON (tbsalasatendimento.sala_id = tbconsulta.sala_id)
                       LEFT JOIN tbtipoconsulta ON (tbtipoconsulta.tipoconsulta_id = tbconsulta.tipoconsulta_id)
-                      WHERE ? LIKE ?
+                      WHERE tbconsulta.". $campo ." LIKE ?
                       ORDER BY tbconsulta.data, tbconsulta.horario";
                
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             

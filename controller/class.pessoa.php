@@ -133,9 +133,9 @@
             return $this->alterarSenha();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setPessoaId(trim(strip_tags(filter_input(INPUT_POST, "pessoa_id"))));
+            $this->setPessoaId($codigo);
             $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
             $this->setEndereco(trim(strip_tags(filter_input(INPUT_POST, "endereco"))));
             $this->setBairro(trim(strip_tags(filter_input(INPUT_POST, "bairro"))));

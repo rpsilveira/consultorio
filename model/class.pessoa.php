@@ -342,16 +342,15 @@
                       end as nivel					  
                       FROM tbpessoa 
                       JOIN tbcidades on (tbcidades.cidade_id = tbpessoa.cidade_id)
-                      WHERE tbpessoa.? LIKE ?
+                      WHERE tbpessoa.". $campo ." LIKE ?
                       AND ((? = 0) OR (tbpessoa.nivel = ?))
                       ORDER BY tbpessoa.nome";
                
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(2, $nivel, PDO::PARAM_INT);
             $sql->bindValue(3, $nivel, PDO::PARAM_INT);
-            $sql->bindValue(4, $nivel, PDO::PARAM_INT);
             
             $sql->execute();
             

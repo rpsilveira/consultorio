@@ -179,13 +179,12 @@
                       LEFT JOIN tbpessoa dentista ON (dentista.pessoa_id = tbagenda.dentista_id)
                       LEFT JOIN tbpessoa paciente ON (paciente .pessoa_id = tbagenda.paciente_id)
                       LEFT JOIN tbsalasatendimento ON (tbsalasatendimento.sala_id = tbagenda.sala_id)
-                      WHERE tbagenda.? LIKE ?
+                      WHERE tbagenda.". $campo ." LIKE ?
                       ORDER BY tbagenda.data, tbagenda.horario";
                
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             

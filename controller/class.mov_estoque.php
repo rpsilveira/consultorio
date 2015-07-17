@@ -21,7 +21,7 @@
             return $this->incluirMovEstoque();
         }
         
-        public function listarTodos(){
+        public function listarTodos() {
         
             $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "movestoque_id");
             $tipo_busca = (isset($_POST["tipo_busca"]) ? $_POST["tipo_busca"] : 0);
@@ -42,24 +42,6 @@
             $this->setTipo($ret_consulta["TIPO"]);
             
             return ($ret_consulta['MOVESTOQUE_ID'] == $codigo);
-        }
-        
-        public function alterar() {
-          
-            $this->setMovEstoqueId(trim(strip_tags(filter_input(INPUT_POST, "movestoque_id"))));
-            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
-            $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
-            $this->setQuantidade(trim(strip_tags(filter_input(INPUT_POST, "quantidade"))));
-            $this->setTipo(trim(strip_tags(filter_input(INPUT_POST, "tipo"))));
-            
-            return $this->alterarMovEstoque();
-        }
-        
-        public function excluir($codigo) {
-          
-            $this->setMovEstoqueId($codigo);
-            
-            return $this->excluirMovEstoque();
         }
         
     }

@@ -67,6 +67,11 @@
     <legend class="page-header">Cadastro de Sala de Atendimento - <?php echo ($codigo == 0) ? "incluir" : "editar" ?>
       <div class="btn-group pull-right">
         <a class="btn btn-success" title="Novo registro" href="cadastro.php"><span class="glyphicon glyphicon-file"></span> Novo</a>
+        <?php if ($codigo > 0){ ?>
+          <a class="btn btn-danger" title="Excluir registro" onclick="javascript: if(confirm('Confirma a exclusão do registro?')) location.href='cadastro.php?acao=excluir&id=<?php echo $codigo;?>'">
+            <span class="glyphicon glyphicon-trash"></span> Excluir
+          </a>
+        <?php } ?>
       </div>
     </legend>
   </div>
@@ -78,7 +83,7 @@
       <div class="row">
         <div class="form-group col-lg-3">
           <span>Código:</span>
-          <input type="text" name="sala_id" class="form-control" value="<?php echo $sala->getSalaId(); ?>" readonly />
+          <input type="text" name="sala_id" class="form-control" value="<?php echo $sala->getSalaId(); ?>" disabled />
         </div>
       </div>
 

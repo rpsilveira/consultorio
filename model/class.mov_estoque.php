@@ -94,13 +94,12 @@
                       FROM tbmovestoque
                       LEFT JOIN tbmateriais ON (tbmovestoque.material_id = tbmateriais.material_id)
                       LEFT JOIN tbpessoa ON (tbmovestoque.pessoa_id = .tbpessoa.pessoa_id)
-                      WHERE ? LIKE ?
+                      WHERE tbmovestoque.". $campo ." LIKE ?
                       ORDER BY tbmovestoque.data";
           
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             

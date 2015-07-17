@@ -20,12 +20,18 @@
             return $this->incluirServico();
         }
         
-        public function listarTodos() {
+        public function buscar() {
+        
+            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : (isset($_SESSION["busca1"]) ? $_SESSION["busca1"] : ""));
+            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : (isset($_SESSION["busca2"]) ? $_SESSION["busca2"] : ""));
+            
+            $_SESSION["busca1"] = $buscar_por;
+            $_SESSION["busca2"] = $busca;
           
-            return $this->listarServicos();
+            return $this->listarServicos($buscar_por, $busca);
         }
         
-        public function buscar($codigo) {
+        public function buscarPorCodigo($codigo) {
         
             $this->setServicoId($codigo);
           
@@ -46,9 +52,9 @@
             return $this->excluirServico();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setServicoId(trim(strip_tags(filter_input(INPUT_POST, "servico_id"))));
+            $this->setServicoId($codigo);
             $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             $this->setTipoTratamentoId(trim(strip_tags(filter_input(INPUT_POST, "tipotratamento_id"))));
             $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));

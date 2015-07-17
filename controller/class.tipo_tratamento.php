@@ -34,9 +34,9 @@
             return $this->incluirTipoTratamento();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setTipoTratamentoId(trim(strip_tags(filter_input(INPUT_POST, "tipotratamento_id"))));
+            $this->setTipoTratamentoId($codigo);
             $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             
             return $this->alterarTipoTratamento();

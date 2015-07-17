@@ -67,9 +67,9 @@
             return $this->incluirContaPaciente();
         }
         
-        public function alterar() {
+        public function alterar($codigo) {
           
-            $this->setContaId(trim(strip_tags(filter_input(INPUT_POST, "conta_id"))));
+            $this->setContaId($codigo);
             $this->setPacienteId(trim(strip_tags(filter_input(INPUT_POST, "paciente_id"))));
             $this->setDtEmissao(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
             $this->setDtVencimento(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_2")))));

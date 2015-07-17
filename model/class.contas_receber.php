@@ -188,25 +188,24 @@
         public function listarContas($campo, $valor) {
         
             $query = "SELECT 
-                            tbcontasreceber.conta_id,
-                            tbcontasreceber.paciente_id,
-                            cast(tbcontasreceber.dt_emissao as date) as dt_emissao,
-                            cast(tbcontasreceber.dt_vencimento as date) as dt_vencimento,
-                            cast(tbcontasreceber.dt_baixa as date) as dt_baixa,
-                            tbcontasreceber.valor,
-                            tbcontasreceber.juros,
-                            tbcontasreceber.desconto,
-                            tbcontasreceber.valor_pago,
-                            tbpessoa.nome as paciente
-                            FROM tbcontasreceber
-                            JOIN tbpessoa on (tbpessoa.pessoa_id = tbcontasreceber.paciente_id)
-                  WHERE ? lIKE ?
+                      tbcontasreceber.conta_id,
+                      tbcontasreceber.paciente_id,
+                      cast(tbcontasreceber.dt_emissao as date) as dt_emissao,
+                      cast(tbcontasreceber.dt_vencimento as date) as dt_vencimento,
+                      cast(tbcontasreceber.dt_baixa as date) as dt_baixa,
+                      tbcontasreceber.valor,
+                      tbcontasreceber.juros,
+                      tbcontasreceber.desconto,
+                      tbcontasreceber.valor_pago,
+                      tbpessoa.nome as paciente
+                      FROM tbcontasreceber
+                      JOIN tbpessoa on (tbpessoa.pessoa_id = tbcontasreceber.paciente_id)
+                  WHERE tbcontasreceber.". $campo ." lIKE ?
                   ORDER BY dt_emissao";
                
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
