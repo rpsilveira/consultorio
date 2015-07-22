@@ -46,7 +46,12 @@
   </legend>
 
   <?php if ($cont > 0){ ?>
-    <p class="text-muted"><i>(Clique sobre o registro para editar/excluir)</i></p>
+    <p>
+      <strong class="text-success"><?php echo "$cont Registro(s) encontrado(s)."; ?></strong>
+      <i class="text-muted">(Clique sobre o registro para editar/excluir)</i>
+    </p>
+  <?php } else { ?>
+    <strong class="text-danger">Nenhum registro encontrado.</strong>
   <?php } ?>
 
   <div class="table">
@@ -69,10 +74,6 @@
       </tbody>
     </table>
   </div> <!-- /table --> 
-  <div class="alert alert-success">
-    <strong><?php echo "$cont Registro(s) encontrado(s)."; ?></strong>
-  </div>
-  <br />
 
 </div> <!-- /main -->
 

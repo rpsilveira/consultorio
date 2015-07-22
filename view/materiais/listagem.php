@@ -6,14 +6,14 @@
 
     include_once("../header.php");
     
-    include_once("../../model/class.servicos.php");
-    include_once("../../controller/class.servicos.php");
+    include_once("../../model/class.materiais.php");
+    include_once("../../controller/class.materiais.php");
 
-    $servico = new Servico();
+    $material = new Material();
 
-    $servicos = $servico->buscar();
+    $materiais = $material->buscar();
 
-    $cont = count($servicos);
+    $cont = count($materiais);
 
 ?>
 
@@ -39,7 +39,7 @@
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-  <legend class="page-header">Listagem de Serviços
+  <legend class="page-header">Listagem de Materiais
     <div class="btn-group pull-right">
       <a class="btn btn-success" title="Novo registro" href="cadastro.php"><span class="glyphicon glyphicon-file"></span> Novo</a>
       <a class="btn btn-info" title="Nova busca" href="busca.php"><span class="glyphicon glyphicon-search"></span> Buscar</a>
@@ -62,16 +62,16 @@
           <th class="col-sm-1">Código</th>
           <th class="col-sm-4">Descrição</th>
           <th class="col-sm-2">Valor</th>
-          <th class="col-sm-3">Tipo Tratamento</th>
+          <th class="col-sm-3">Saldo atual</th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($servicos as $row) { ?>
-          <tr title="Manutenção no registro" style="cursor:pointer" onClick="document.location.href='cadastro.php?id=<?php echo $row["SERVICO_ID"];?>'">
-            <td><?php echo $row["SERVICO_ID"]; ?></td>
+        <?php foreach ($materiais as $row) { ?>
+          <tr title="Manutenção no registro" style="cursor:pointer" onClick="document.location.href='cadastro.php?id=<?php echo $row["MATERIAL_ID"];?>'">
+            <td><?php echo $row["MATERIAL_ID"]; ?></td>
             <td><?php echo $row["DESCRICAO"]; ?></td>
             <td><?php echo number_format($row["VALOR"], 2, ',', '.'); ?></td>
-            <td><?php echo $row["TIPOTRATAMENTO"]; ?></td>
+            <td><?php echo number_format($row["SALDO_ATUAL"], 2, ',', '.'); ?></td>
           </tr>
         <?php } ?>
       </tbody>

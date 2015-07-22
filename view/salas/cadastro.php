@@ -10,8 +10,16 @@
     $acao   = isset($_GET["acao"]) ? $_GET["acao"] : "";
     $codigo = isset($_GET["id"]) ? $_GET["id"] : 0;
 
-    if ($codigo > 0)
-      $sala->buscar($codigo);
+    if ($codigo > 0) {
+      
+        if (! $sala->buscar($codigo)) {
+            echo("<script>
+                    alert('Registro não encontrado!');
+                    window.location = 'listagem.php';
+                  </script>");
+            exit();
+        }
+    }
 
     if (($acao == "excluir")&&($codigo > 0)) {
     

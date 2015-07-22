@@ -9,7 +9,7 @@
     class MaterialModel {
       
         private $material_id;
-        private $nome;
+        private $descricao;
         private $saldo_atual;
         private $saldo_min;
         private $valor;
@@ -20,8 +20,8 @@
         public function setMaterialId($material_id) {
           $this->material_id = $material_id;
         }
-        public function setNome($nome) {
-          $this->nome = $nome;
+        public function setDescricao($descricao) {
+          $this->descricao = $descricao;
         }
         public function setSaldoAtual($saldo_atual) {
           $this->saldo_atual = $saldo_atual;
@@ -37,8 +37,8 @@
         public function getMaterialId() {
           return $this->material_id;
         }
-        public function getNome() {
-          return $this->nome;
+        public function getDescricao() {
+          return $this->descricao;
         }
         public function getSaldoAtual() {
           return $this->saldo_atual;
@@ -54,14 +54,14 @@
         
             try {
         
-                $query = "INSERT INTO tbmateriais (nome, saldo_atual, saldo_min, valor)
+                $query = "INSERT INTO tbmateriais (descricao, saldo_atual, saldo_min, valor)
                           VALUES (?, ?, ?, ?)";
                 
                 $db = Dao::abreConexao();
 
                 $sql = $db->prepare($query);
 
-                $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+                $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
                 $sql->bindValue(2, $this->getSaldoAtual(), PDO::PARAM_STR);
                 $sql->bindValue(3, $this->getSaldoMin(), PDO::PARAM_STR);
                 $sql->bindValue(4, $this->getValor(), PDO::PARAM_STR);
@@ -85,14 +85,14 @@
         public function alterarMaterial() {
           
             $query = "UPDATE tbmateriais SET 
-                      nome = ?,
+                      descricao = ?,
                       saldo_min = ?,
                       valor = ?
                       WHERE material_id = ?"; 
                       
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $this->getNome(), PDO::PARAM_STR);
+            $sql->bindValue(1, $this->getDescricao(), PDO::PARAM_STR);
             $sql->bindValue(2, $this->getSaldoMin(), PDO::PARAM_STR);
             $sql->bindValue(3, $this->getValor(), PDO::PARAM_STR);
             $sql->bindValue(4, $this->getMaterialId(), PDO::PARAM_INT);
@@ -129,22 +129,16 @@
             return $retorno;
         }
         
-        public function listarMaterial($campo, $valor) {
+        public function listarMateriais($campo, $valor) {
         
-            $query = "SELECT 
-                      material_id,
-                      nome,
-                      saldo_atual,
-                      saldo_min,
-                      valor
+            $query = "SELECT *
                       FROM tbmateriais
-                      WHERE ? LIKE ?
-                      ORDER BY nome";
+                      WHERE ". $campo ." LIKE ?
+                      ORDER BY descricao";
                  
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, $campo, PDO::PARAM_STR);
-            $sql->bindValue(2, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -157,12 +151,7 @@
         
         public function buscarMaterial() {
           
-            $query = "SELECT 
-                      material_id,
-                      nome,
-                      saldo_atual,
-                      saldo_min,
-                      valor
+            $query = "SELECT *
                       FROM tbmateriais
                       WHERE material_id = ?";
           
@@ -172,7 +161,7 @@
             
             $sql->execute();
             
-            $retorno = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $retorno = $sql->fetch(PDO::FETCH_ASSOC);
             
             Dao::fechaConexao();
             

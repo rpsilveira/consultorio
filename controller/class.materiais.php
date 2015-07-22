@@ -4,7 +4,7 @@
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    class Materiais extends MaterialModel {
+    class Material extends MaterialModel {
     
         public function __construct() {
             
@@ -19,13 +19,24 @@
             return $this->listarMaterial($buscar_por, $busca);
         }
         
-        public function buscar($codigo) {
+        public function buscar() {
+        
+            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : (isset($_SESSION["busca1"]) ? $_SESSION["busca1"] : ""));
+            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : (isset($_SESSION["busca2"]) ? $_SESSION["busca2"] : ""));
+            
+            $_SESSION["busca1"] = $buscar_por;
+            $_SESSION["busca2"] = $busca;
+          
+            return $this->listarMateriais($buscar_por, $busca);
+        }
+        
+        public function buscarPorCodigo($codigo) {
         
             $this->setMaterialId($codigo);
             
             $ret_consulta = $this->buscarMaterial();
             
-            $this->setNome($ret_consulta["NOME"]);
+            $this->setDescricao($ret_consulta["DESCRICAO"]);
             $this->setSaldoMin($ret_consulta["SALDO_MIN"]);
             $this->setSaldoAtual($ret_consulta["SALDO_ATUAL"]);
             $this->setValor($ret_consulta["VALOR"]);
@@ -35,9 +46,10 @@
         
         public function incluir(){
           
-            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             $this->setSaldoMin(trim(strip_tags(filter_input(INPUT_POST, "saldo_min"))));
-            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
+            $this->setSaldoMin(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "saldo_minimo")))));
             
             return $this->incluiMaterial();
         }
@@ -45,9 +57,10 @@
         public function alterar($codigo) {
           
             $this->setMaterialId($codigo);
-            $this->setNome(trim(strip_tags(filter_input(INPUT_POST, "nome"))));
+            $this->setDescricao(trim(strip_tags(filter_input(INPUT_POST, "descricao"))));
             $this->setSaldoMin(trim(strip_tags(filter_input(INPUT_POST, "saldo_min"))));
-            $this->setValor(trim(strip_tags(filter_input(INPUT_POST, "valor"))));
+            $this->setValor(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "valor")))));
+            $this->setSaldoMin(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "saldo_minimo")))));
             
             return $this->alterarMaterial();
         }

@@ -16,8 +16,16 @@
     
     $tipos = $tipotrat->listarTodos();
 
-    if ($codigo > 0)
-      $servico->buscarPorCodigo($codigo);
+    if ($codigo > 0) {
+      
+        if (! $servico->buscarPorCodigo($codigo)) {
+            echo("<script>
+                    alert('Registro não encontrado!');
+                    window.location = 'listagem.php';
+                  </script>");
+            exit();
+        }
+    }
 
     if (($acao == "excluir")&&($codigo > 0)) {
     
