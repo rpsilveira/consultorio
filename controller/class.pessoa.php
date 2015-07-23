@@ -27,7 +27,7 @@
             
             if ($retorno) {
             
-                $this->buscar($id);
+                $this->buscarPorCodigo($id);
                 
                 if (!isset($_SESSION))
                    session_start();
@@ -79,7 +79,7 @@
             return $this->listarTodos(3);
         }
         
-        public function buscar($codigo) {
+        public function buscarPorCodigo($codigo) {
         
             $this->setPessoaId($codigo);
             
@@ -101,7 +101,7 @@
             $this->setLogin($ret_consulta["LOGIN"]);
             $this->setSenha($ret_consulta["SENHA"]);
             
-            return ($ret_consulta['pessoa_id'] == $codigo);
+            return ($ret_consulta['PESSOA_ID'] == $codigo);
         }
         
         public function incluir() {

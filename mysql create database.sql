@@ -91,6 +91,7 @@ CREATE TABLE TBMOVESTOQUE (
   QUANTIDADE decimal(15,2),
   TIPO char(1)  COMMENT 'E - Entrada; S - Saída',
   PESSOA_ID int,
+  OBSERVACAO varchar(200),
   constraint PK_TBMOVESTOQUE PRIMARY KEY (MOVESTOQUE_ID)
 ) ENGINE=InnoDB;
 

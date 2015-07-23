@@ -1,8 +1,11 @@
 <?php
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /* Gerenciamento de consult�rio m�dico/odontol�gico  */
+    /* Gerenciamento de consultório médico/odontológico  */
     /*       Desenvolvido por: Reinaldo Silveira         */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    include_once("../../model/class.materiais.php");
+    include_once("class.materiais.php");
 	
     class MovEstoque extends MovEstoqueModel{
       
@@ -13,24 +16,47 @@
         
         public function incluir() {
           
-            $this->setData(implode("-", array_reverse(explode("/", filter_input(INPUT_POST, "data_1")))));
+            $this->setData(date("Y-m-d H:i:s"));
             $this->setMaterialId(trim(strip_tags(filter_input(INPUT_POST, "material_id"))));
-            $this->setQuantidade(trim(strip_tags(filter_input(INPUT_POST, "quantidade"))));
+            $this->setQuantidade(str_replace(',', '.', trim(strip_tags(filter_input(INPUT_POST, "quantidade")))));
             $this->setTipo(trim(strip_tags(filter_input(INPUT_POST, "tipo"))));
+            $this->setObservacao(trim(strip_tags(filter_input(INPUT_POST, "observacao"))));
+            $this->setPessoaId($_SESSION["usr_id"]);
             
-            return $this->incluirMovEstoque();
+            $retorno = $this->incluirMovEstoque();
+            
+            if ($retorno) {
+            
+                $material = new Material();
+                
+                if ($this->getTipo() == 'E')
+                    $material->somaEstoque($this->getMaterialId(), $this->getQuantidade());
+                else
+                    $material->subtraiEstoque($this->getMaterialId(), $this->getQuantidade());
+            }
+            
+            return $retorno;
         }
         
-        public function listarTodos() {
+        public function buscar() {
         
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "movestoque_id");
-            $tipo_busca = (isset($_POST["tipo_busca"]) ? $_POST["tipo_busca"] : 0);
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
+            $data_ini = (isset($_POST["data_ini"]) ? $_POST["data_ini"] : (isset($_SESSION["busca1"]) ? $_SESSION["busca1"] : ""));
+            $data_fin = (isset($_POST["data_fin"]) ? $_POST["data_fin"] : (isset($_SESSION["busca2"]) ? $_SESSION["busca2"] : ""));
+            $material_id = (isset($_POST["material_id"]) ? $_POST["material_id"] : (isset($_SESSION["busca3"]) ? $_SESSION["busca3"] : 0));
+            $tipo = (isset($_POST["tipo"]) ? $_POST["tipo"] : (isset($_SESSION["busca4"]) ? $_SESSION["busca4"] : ""));
             
-            return $this->listarMovEstoque($buscar_por, $busca);
+            $data_ini = date("Y-m-d", strtotime(str_replace('/', '-', $data_ini)));
+            $data_fin = date("Y-m-d", strtotime(str_replace('/', '-', $data_fin)));
+            
+            $_SESSION["busca1"] = $data_ini;
+            $_SESSION["busca2"] = $data_fin;
+            $_SESSION["busca3"] = $material_id;
+            $_SESSION["busca4"] = $tipo;
+            
+            return $this->listarMovEstoque($data_ini, $data_fin, $material_id, $tipo);
         }
         
-        public function buscar($codigo) {
+        public function buscarPorCodigo($codigo) {
         
             $this->setMovEstoqueId($codigo);
             
@@ -40,6 +66,8 @@
             $this->setMaterialId($ret_consulta["MATERIAL_ID"]);
             $this->setQuantidade($ret_consulta["QUANTIDADE"]);
             $this->setTipo($ret_consulta["TIPO"]);
+            $this->setObservacao($ret_consulta["OBSERVACAO"]);
+            $this->setPessoaId($ret_consulta["PESSOA_ID"]);
             
             return ($ret_consulta['MOVESTOQUE_ID'] == $codigo);
         }

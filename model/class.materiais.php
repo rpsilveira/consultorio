@@ -129,7 +129,7 @@
             return $retorno;
         }
         
-        public function listarMateriais($campo, $valor) {
+        public function buscarMateriais($campo, $valor) {
         
             $query = "SELECT *
                       FROM tbmateriais
@@ -139,6 +139,23 @@
             $sql = Dao::abreConexao()->prepare($query);
             
             $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
+            
+            $sql->execute();
+            
+            $retorno = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+            Dao::fechaConexao();
+            
+            return $retorno;
+        }
+        
+        public function listarMateriais() {
+        
+            $query = "SELECT *
+                      FROM tbmateriais
+                      ORDER BY descricao";
+                 
+            $sql = Dao::abreConexao()->prepare($query);
             
             $sql->execute();
             
@@ -177,7 +194,7 @@
             $sql = Dao::abreConexao()->prepare($query);
             
             $sql->bindValue(1, $quantidade, PDO::PARAM_STR);
-            $sql->bindValue(1, $this->getMaterialId(), PDO::PARAM_INT);
+            $sql->bindValue(2, $this->getMaterialId(), PDO::PARAM_INT);
             
             $retorno = $sql->execute();
             
@@ -195,7 +212,7 @@
             $sql = Dao::abreConexao()->prepare($query);
             
             $sql->bindValue(1, $quantidade, PDO::PARAM_STR);
-            $sql->bindValue(1, $this->getMaterialId(), PDO::PARAM_INT);
+            $sql->bindValue(2, $this->getMaterialId(), PDO::PARAM_INT);
             
             $retorno = $sql->execute();
             

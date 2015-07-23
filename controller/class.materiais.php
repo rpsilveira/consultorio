@@ -13,10 +13,7 @@
         
         public function listarTodos() {
         
-            $buscar_por = (isset($_POST["buscar_por"]) ? $_POST["buscar_por"] : "material_id");
-            $busca = (isset($_POST["busca"]) ? $_POST["busca"] : "");
-            
-            return $this->listarMaterial($buscar_por, $busca);
+            return $this->listarMateriais();
         }
         
         public function buscar() {
@@ -27,7 +24,7 @@
             $_SESSION["busca1"] = $buscar_por;
             $_SESSION["busca2"] = $busca;
           
-            return $this->listarMateriais($buscar_por, $busca);
+            return $this->buscarMateriais($buscar_por, $busca);
         }
         
         public function buscarPorCodigo($codigo) {

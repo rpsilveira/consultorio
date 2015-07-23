@@ -13,6 +13,8 @@
         private $material_id;
         private $quantidade;
         private $tipo;
+        private $pessoa_id;
+        private $observacao;
         
         public function __contruct(){}
         
@@ -31,6 +33,12 @@
         public function setTipo($tipo){
           $this->tipo = $tipo;
         }
+        public function setPessoaId($pessoa_id){
+          $this->pessoa_id = $pessoa_id;
+        }
+        public function setObservacao($observacao){
+          $this->observacao = $observacao;
+        }
         
         public function getMovEstoqueId(){
           return $this->movestoque_id;
@@ -45,15 +53,21 @@
           return $this->quantidade;	
         }
         public function getTipo(){
-          return $this->tipo;	
+          return $this->tipo;
+        }
+        public function getPessoaId(){
+          return $this->pessoa_id;
+        }
+        public function getObservacao(){
+          return $this->observacao;	
         }
         
-        public function incluiMovEstoque() {
+        public function incluirMovEstoque() {
           
             try {
         
-                $query = "INSERT INTO tbmovestoque(data, material_id, quantidade, pessoa_id, tipo)
-                          VALUES(?, ?, ?, ?, ?)";
+                $query = "INSERT INTO tbmovestoque(data, material_id, quantidade, tipo, pessoa_id, observacao)
+                          VALUES(?, ?, ?, ?, ?, ?)";
                 
                 $db = Dao::abreConexao();
 
@@ -62,8 +76,9 @@
                 $sql->bindValue(1, $this->getData(), PDO::PARAM_STR);
                 $sql->bindValue(2, $this->getMaterialId(), PDO::PARAM_INT);
                 $sql->bindValue(3, $this->getQuantidade(), PDO::PARAM_STR);
-                $sql->bindValue(4, $_SESSION["pessoa_id"], PDO::PARAM_INR);
-                $sql->bindValue(5, $this->getTipo(), PDO::PARAM_STR);
+                $sql->bindValue(4, $this->getTipo(), PDO::PARAM_STR);
+                $sql->bindValue(5, $this->getPessoaId(), PDO::PARAM_INT);
+                $sql->bindValue(6, $this->getObservacao(), PDO::PARAM_STR);
 
                 $retorno = $sql->execute();
 
@@ -82,24 +97,32 @@
         }
         
         
-        public function listarMovEstoque($campo, $valor) {
+        public function listarMovEstoque($data_ini, $data_fin, $material_id, $tipo) {
         
             $query = "SELECT 
-                      tbmovestoque.movestoque_id,
-                      CAST(tbmovestoque.data as date) AS data,
-                      tbmateriais.nome,
-                      tbmovestoque.quantidade,
-                      tbmovestoque.tipo,
-                      tbpessoa.nome as usuario
-                      FROM tbmovestoque
-                      LEFT JOIN tbmateriais ON (tbmovestoque.material_id = tbmateriais.material_id)
-                      LEFT JOIN tbpessoa ON (tbmovestoque.pessoa_id = .tbpessoa.pessoa_id)
-                      WHERE tbmovestoque.". $campo ." LIKE ?
-                      ORDER BY tbmovestoque.data";
+                      TBMOVESTOQUE.MOVESTOQUE_ID,
+                      TBMOVESTOQUE.DATA,
+                      TBMATERIAIS.DESCRICAO AS MATERIAL,
+                      TBMOVESTOQUE.QUANTIDADE,
+                      CASE TBMOVESTOQUE.TIPO
+                        WHEN 'E' THEN 'Entrada'
+                        ELSE 'Saída'
+                      END AS TIPO
+                      FROM TBMOVESTOQUE
+                      LEFT JOIN TBMATERIAIS ON (TBMOVESTOQUE.MATERIAL_ID = TBMATERIAIS.MATERIAL_ID)
+                      WHERE CAST(TBMOVESTOQUE.DATA AS DATE) BETWEEN ? AND ?
+                      AND ((? = 0) OR (TBMOVESTOQUE.MATERIAL_ID = ?))
+                      AND ((? = 'A') OR (TBMOVESTOQUE.TIPO = ?))
+                      ORDER BY TBMOVESTOQUE.DATA";
           
             $sql = Dao::abreConexao()->prepare($query);
             
-            $sql->bindValue(1, '%'. $valor .'%', PDO::PARAM_STR);
+            $sql->bindValue(1, $data_ini, PDO::PARAM_STR);
+            $sql->bindValue(2, $data_fin, PDO::PARAM_STR);
+            $sql->bindValue(3, $material_id, PDO::PARAM_INT);
+            $sql->bindValue(4, $material_id, PDO::PARAM_INT);
+            $sql->bindValue(5, $tipo, PDO::PARAM_STR);
+            $sql->bindValue(6, $tipo, PDO::PARAM_STR);
             
             $sql->execute();
             
@@ -113,16 +136,9 @@
         
         public function buscarMovEstoque() {
           
-            $query = "SELECT 
-                      tbmovestoque.movestoque_id,
-                      cast(tbmovestoque.data as date) as data,
-                      tbmovestoque.material_id,
-                      tbmateriais.nome,
-                      tbmovestoque.quantidade,
-                      tbmovestoque.tipo
-                      FROM tbmovestoque
-                      JOIN tbmateriais on (tbmovestoque.material_id = tbmateriais.material_id)
-                      WHERE movestoque_id = ?";
+            $query = "SELECT *
+                      FROM TBMOVESTOQUE
+                      WHERE MOVESTOQUE_ID = ?";
           
             $sql = Dao::abreConexao()->prepare($query);
             
